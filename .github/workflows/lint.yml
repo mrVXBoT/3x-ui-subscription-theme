@@ -1,0 +1,26 @@
+name: Quality & Lint
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: '.'
+
+      - name: Validate Shell Script Execution
+        run: |
+          chmod +x install.sh
+          bash -n install.sh
+          ./install.sh --help
+          ./install.sh --status

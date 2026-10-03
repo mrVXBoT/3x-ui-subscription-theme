@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>RAD VPN • اشتراک شما</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#07080c" />
+
+  <!-- Fonts: Vazirmatn & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       Tailscale / Proton / Linear Inspired Design System (Happ Edition)
+       ========================================================================== */
+    :root {
+      --bg: #07080c;
+      --card-master: #0e1017;
+      --surface-inner: #131620;
+      --surface-hover: #181c29;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-subtle: rgba(255, 255, 255, 0.05);
+      --border-hover: rgba(255, 255, 255, 0.16);
+
+      --text-1: #ffffff;
+      --text-2: #cbd5e1;
+      --text-3: #94a3b8;
+      --text-4: #64748b;
+
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --accent-subtle: rgba(59, 130, 246, 0.12);
+
+      --success: #10b981;
+      --success-subtle: rgba(16, 185, 129, 0.12);
+      --danger: #ef4444;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 22px;
+
+      --font-fa: 'Vazirmatn', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-en: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: var(--font-fa);
+      background-color: var(--bg);
+      color: var(--text-1);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 20px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Ambient Ceiling Glow */
+    .ambient-glow {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 880px;
+      height: 320px;
+      background: radial-gradient(50% 100% at 50% 0%, rgba(59, 130, 246, 0.07) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Responsive App Shell: 780px Desktop / 100% Mobile */
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 780px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* ==========================================================================
+       1. Top Header Identity
+       ========================================================================== */
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4px 8px;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(145deg, #181c28 0%, #0e111a 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+    }
+
+    .brand-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-title {
+      font-family: var(--font-en);
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .brand-plan-tag {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-subtle);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      padding: 2px 7px;
+      border-radius: 5px;
+    }
+
+    .sub-id-str {
+      font-family: var(--font-en);
+      font-size: 12px;
+      color: var(--text-3);
+      font-weight: 500;
+      direction: ltr;
+      text-align: right;
+    }
+
+    /* Status Badge */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .status-pill.active {
+      background: var(--success-subtle);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: var(--success);
+    }
+
+    .status-pill.disabled {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      color: var(--danger);
+    }
+
+    .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: currentColor;
+    }
+
+    /* ==========================================================================
+       2. Unified Master Dashboard
+       ========================================================================== */
+    .master-card {
+      background: var(--card-master);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 32px;
+      align-items: stretch;
+      box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    @media (max-width: 720px) {
+      .master-card {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 20px;
+      }
+    }
+
+    /* Left / Primary Wing: Status & Traffic Metrics */
+    .panel-status {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .status-top-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .metric-caption-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .metric-caption {
+      font-size: 13px;
+      color: var(--text-3);
+      font-weight: 500;
+    }
+
+    .metric-pct-tag {
+      font-family: var(--font-en);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* Big Metric Display with strict LTR number formatting */
+    .hero-number-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      direction: ltr;
+      text-align: right;
+      width: fit-content;
+    }
+
+    .hero-num {
+      font-family: var(--font-en);
+      font-size: 44px;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .hero-unit {
+      font-family: var(--font-en);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .hero-unlimited-title {
+      font-size: 36px;
+      font-weight: 800;
+      color: #38bdf8;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .hero-sub-detail {
+      font-size: 13px;
+      color: var(--text-2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-sub-detail b {
+      color: #ffffff;
+      font-family: var(--font-en);
+      font-weight: 600;
+    }
+
+    /* 5px Sleek Progress Bar */
+    .progress-track {
+      position: relative;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      background: linear-gradient(90deg, #2563eb, #38bdf8);
+      border-radius: 9999px;
+      transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Supporting Metrics Grid */
+    .supporting-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+
+    .support-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .support-label {
+      font-size: 12px;
+      color: var(--text-4);
+      font-weight: 500;
+    }
+
+    .support-val {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+      line-height: 1.4;
+    }
+
+    .support-val.ltr-val {
+      direction: ltr;
+      text-align: right;
+      font-family: var(--font-en);
+    }
+
+    /* Right / Action Wing: Happ 1-Click Connect & Actions */
+    .panel-actions {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--surface-inner);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+    }
+
+    .actions-top {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .device-recom-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .device-recom-label {
+      font-size: 12px;
+      color: var(--text-3);
+      font-weight: 600;
+    }
+
+    .device-os-tag {
+      font-family: var(--font-en);
+      font-size: 11px;
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 2px 7px;
+      border-radius: 5px;
+    }
+
+    /* Big White Primary CTA: Connect in Happ */
+    .btn-connect-primary {
+      width: 100%;
+      height: 52px;
+      border-radius: var(--radius-md);
+      background: #ffffff;
+      color: #07080c;
+      border: none;
+      font-family: var(--font-fa);
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.12);
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+
+    .btn-connect-primary:hover {
+      background: #f1f5f9;
+    }
+
+    .btn-connect-primary:active {
+      transform: scale(0.99);
+    }
+
+    /* Copy Subscription Secondary Action */
+    .btn-copy-secondary {
+      width: 100%;
+      height: 46px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      color: var(--text-1);
+      font-family: var(--font-fa);
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-copy-secondary:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: var(--border-hover);
+    }
+
+    .btn-copy-secondary:active {
+      transform: scale(0.99);
+    }
+
+    .btn-copy-secondary.copied {
+      border-color: rgba(16, 185, 129, 0.5);
+      color: var(--success);
+      background: var(--success-subtle);
+    }
+
+    /* Trigger: Download Happ & QR Modal */
+    .download-happ-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 10px;
+      color: var(--text-3);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      background: transparent;
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-md);
+      transition: all 0.15s ease;
+      width: 100%;
+    }
+
+    .download-happ-btn:hover {
+      color: var(--text-1);
+      border-color: var(--border-hover);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    /* ==========================================================================
+       3. Footer Support
+       ========================================================================== */
+    .page-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding-top: 8px;
+    }
+
+    .footer-support-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-3);
+      font-size: 13px;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .footer-support-link:hover {
+      color: var(--text-1);
+    }
+
+    /* ==========================================================================
+       4. Floating Modal (Download Happ & QR Code)
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 440px;
+      background: #0f121b;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9);
+      position: relative;
+      animation: modalSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalSlide {
+      from { transform: scale(0.95) translateY(12px); }
+      to { transform: scale(1) translateY(0); }
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .modal-close-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text-3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .modal-close-btn:hover {
+      color: #ffffff;
+      border-color: var(--border-hover);
+    }
+
+    /* Happ Download Links */
+    .modal-downloads-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .download-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text-1);
+      text-decoration: none;
+      font-size: 13px;
+      transition: all 0.15s;
+    }
+
+    .download-item:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: var(--border-hover);
+    }
+
+    .download-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .download-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-2);
+    }
+
+    .download-name {
+      font-family: var(--font-en);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .download-desc {
+      font-size: 11px;
+      color: var(--text-3);
+    }
+
+    .download-badge {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .qr-modal-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      gap: 8px;
+    }
+
+    #qrImageModal {
+      width: 170px;
+      height: 170px;
+      display: block;
+    }
+
+    .qr-modal-hint {
+      color: #334155;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* Toast */
+    .toast-pill {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(40px);
+      background: #151824;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .toast-pill.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-glow"></div>
+
+  <div class="app-shell">
+
+    <!-- 1. Header Identity -->
+    <header class="top-header">
+      <div class="brand-wrap">
+        <div class="brand-logo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
+        </div>
+        <div class="brand-meta">
+          <div class="brand-title-row">
+            <span class="brand-title">RAD VPN</span>
+            <span class="brand-plan-tag">Dedicated</span>
+          </div>
+          <span class="sub-id-str" id="accountSubIdDisplay">{{ .sId }}</span>
+        </div>
+      </div>
+
+      {{ if .enabled }}
+        <div class="status-pill active">
+          <span class="pill-dot"></span>
+          <span>اشتراک فعال</span>
+        </div>
+      {{ else }}
+        <div class="status-pill disabled">
+          <span class="pill-dot"></span>
+          <span>غیرفعال</span>
+        </div>
+      {{ end }}
+    </header>
+
+    <!-- 2. Unified Master Dashboard -->
+    <main class="master-card">
+      
+      <!-- Left / Primary Wing: Status & Traffic Metrics -->
+      <section class="panel-status">
+        <div class="status-top-section">
+          <div class="metric-caption-row">
+            <span class="metric-caption" id="metricTitle">ترافیک باقیمانده</span>
+            <span class="metric-pct-tag" id="metricPctTag"></span>
+          </div>
+
+          <div id="metricContentArea">
+            <!-- Rendered dynamically -->
+          </div>
+
+          <div class="hero-sub-detail" id="totalUsageRow">
+            <span>از کل حجم اشتراک:</span>
+            <b id="totalVolumeText">{{ .total }}</b>
+          </div>
+        </div>
+
+        <!-- Progress (Hidden automatically for unlimited) -->
+        <div id="progressWrap">
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Supporting Metrics Row -->
+        <div class="supporting-grid">
+          <div class="support-item">
+            <span class="support-label">مهلت اعتبار</span>
+            <span class="support-val" id="expirySummary">در حال استعلام...</span>
+          </div>
+
+          <div class="support-item">
+            <span class="support-label">مصرف کل تاکنون</span>
+            <span class="support-val ltr-val" id="totalUsedText">{{ .used }}</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right / Action Wing: Happ 1-Click Connect & Actions -->
+      <section class="panel-actions">
+        <div class="actions-top">
+          <div class="device-recom-head">
+            <span class="device-recom-label">اتصال با نرم‌افزار رسمی</span>
+            <span class="device-os-tag">Happ App</span>
+          </div>
+
+          <!-- Primary CTA: 1-Click Happ Add -->
+          <a class="btn-connect-primary" id="primaryHappBtn" href="#">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span>اتصال با Happ</span>
+          </a>
+
+          <!-- Copy Subscription Secondary Action -->
+          <button class="btn-copy-secondary" id="copySubBtn">
+            <svg id="copyIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span id="copyBtnText">کپی لینک اشتراک</span>
+          </button>
+        </div>
+
+        <!-- Trigger for Download Happ & QR Modal -->
+        <button class="download-happ-btn" id="openModalBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span>دانلود اپلیکیشن Happ یا اسکن QR</span>
+        </button>
+      </section>
+
+    </main>
+
+    <!-- 3. Page Footer -->
+    <footer class="page-footer">
+      <a href="https://t.me/t2kis" target="_blank" class="footer-support-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+        </svg>
+        <span>پشتیبانی تلگرام و راهنمای اتصال</span>
+      </a>
+    </footer>
+
+  </div>
+
+  <!-- 4. Floating Modal (Download Happ & QR Code) -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span class="modal-title">دانلود و اسکن کد QR</span>
+        <button class="modal-close-btn" id="closeModalBtn" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Happ Official App Store Downloads -->
+      <div class="modal-downloads-list">
+        <!-- iOS App Store -->
+        <a class="download-item" href="https://apps.apple.com/app/happ-proxy-utility/id6504287215" target="_blank">
+          <div class="download-left">
+            <div class="download-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.92-2.85-.9.04-1.99.6-2.61 1.34-.55.63-1.03 1.66-.9 2.68 1.01.08 2.01-.5 2.59-1.17z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="download-name">Happ for iOS</div>
+              <div class="download-desc">دانلود مستقیم از App Store</div>
+            </div>
+          </div>
+          <span class="download-badge">دریافت</span>
+        </a>
+
+        <!-- Android Google Play -->
+        <a class="download-item" href="https://play.google.com/store/apps/details?id=com.happproxy" target="_blank">
+          <div class="download-left">
+            <div class="download-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993.0001.5511-.4482.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993 0 .5511-.4482.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4116 13.8533 8.081 12 8.081s-3.5902.3306-5.1367.8687L4.841 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"/>
+              </svg>
+            </div>
+            <div>
+              <div class="download-name">Happ for Android</div>
+              <div class="download-desc">دانلود مستقیم از Google Play</div>
+            </div>
+          </div>
+          <span class="download-badge">دریافت</span>
+        </a>
+
+        <!-- Desktop (Windows / Mac) -->
+        <a class="download-item" href="https://happ.su/" target="_blank">
+          <div class="download-left">
+            <div class="download-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <div>
+              <div class="download-name">Happ Desktop</div>
+              <div class="download-desc">ویندوز، مک و لینوکس</div>
+            </div>
+          </div>
+          <span class="download-badge">دریافت</span>
+        </a>
+      </div>
+
+      <!-- QR Code Container for Happ -->
+      <div class="qr-modal-container">
+        <img id="qrImageModal" src="" alt="QR Code" />
+        <span class="qr-modal-hint">اسکن با دوربین گوشی یا اسکنر داخل Happ</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-pill" id="toastPill">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    <span id="toastText">لینک سابسکریپشن کپی شد</span>
+  </div>
+
+  <script>
+    (function() {
+      // 1. Injected Data
+      const rawRemained = "{{ .remained }}".trim();
+      const rawUsed = "{{ .used }}".trim();
+      const rawTotal = "{{ .total }}".trim();
+      const rawExpire = parseInt("{{ .expire }}", 10) || 0;
+      const subUrl = window.location.href;
+
+      // Clean Sub ID truncate for display
+      const fullSubId = "{{ .sId }}".trim();
+      if (fullSubId.length > 24) {
+        document.getElementById('accountSubIdDisplay').textContent = fullSubId.substring(0, 10) + '...' + fullSubId.substring(fullSubId.length - 8);
+      }
+
+      // 2. Parse Size Helper
+      function parseSizeToBytes(str) {
+        if (!str) return 0;
+        const u = str.toUpperCase().trim();
+        const num = parseFloat(u) || 0;
+        if (u.includes('TB')) return num * 1099511627776;
+        if (u.includes('GB')) return num * 1073741824;
+        if (u.includes('MB')) return num * 1048576;
+        if (u.includes('KB')) return num * 1024;
+        return num;
+      }
+
+      const totalBytes = parseSizeToBytes(rawTotal);
+      const usedBytes = parseSizeToBytes(rawUsed);
+
+      // Check if Unlimited Plan (0, 0B, empty, or infinity)
+      const isUnlimited = totalBytes === 0 || rawTotal.includes('0B') || rawTotal.includes('0.00') || rawTotal.includes('∞');
+
+      const metricTitle = document.getElementById('metricTitle');
+      const metricPctTag = document.getElementById('metricPctTag');
+      const metricContentArea = document.getElementById('metricContentArea');
+      const totalUsageRow = document.getElementById('totalUsageRow');
+      const progressWrap = document.getElementById('progressWrap');
+      const progressFill = document.getElementById('progressFill');
+
+      if (isUnlimited) {
+        // UNLIMITED SUBSCRIPTION DESIGN
+        metricTitle.textContent = 'وضعیت ترافیک';
+        metricPctTag.textContent = 'نامحدود';
+        metricContentArea.innerHTML = '<div class="hero-unlimited-title">نامحدود</div>';
+        totalUsageRow.innerHTML = '<span>سقف مصرف ترافیک:</span> <b>آزاد</b>';
+        progressWrap.style.display = 'none';
+      } else {
+        // FINITE SUBSCRIPTION DESIGN
+        metricTitle.textContent = 'ترافیک باقیمانده';
+        const remMatch = rawRemained.match(/^([\d.]+)\s*([A-Za-z]+)?$/);
+        const remNum = remMatch ? remMatch[1] : rawRemained;
+        const remUnit = remMatch ? (remMatch[2] || 'GB') : '';
+
+        metricContentArea.innerHTML = `
+          <div class="hero-number-wrap">
+            <span class="hero-num">${remNum}</span>
+            <span class="hero-unit">${remUnit}</span>
+          </div>
+        `;
+
+        const pct = Math.min(100, Math.max(1, Math.round((usedBytes / totalBytes) * 100)));
+        metricPctTag.textContent = `${pct}% مصرف شده`;
+        setTimeout(() => {
+          progressFill.style.width = pct + '%';
+        }, 100);
+      }
+
+      // 3. Expiry Calculation
+      const expEl = document.getElementById('expirySummary');
+      if (rawExpire === 0) {
+        expEl.textContent = 'بدون انقضا (همیشگی)';
+      } else {
+        const expDate = new Date(rawExpire * 1000);
+        const now = new Date();
+        const diffDays = Math.ceil((expDate - now) / 86400000);
+
+        let jalaliDate = '';
+        try {
+          jalaliDate = new Intl.DateTimeFormat('fa-IR', {
+            month: 'long',
+            day: 'numeric'
+          }).format(expDate);
+        } catch(e) {
+          jalaliDate = expDate.toLocaleDateString();
+        }
+
+        if (diffDays > 0) {
+          expEl.textContent = `${diffDays.toLocaleString('fa-IR')} روز دیگر (${jalaliDate})`;
+        } else {
+          expEl.textContent = 'منقضی شده';
+          expEl.style.color = 'var(--danger)';
+        }
+      }
+
+      // 4. Primary Happ Deep Link Connection
+      // Official Happ URL scheme: happ://add/<subUrl>
+      const primaryHappBtn = document.getElementById('primaryHappBtn');
+      primaryHappBtn.href = `happ://add/${subUrl}`;
+
+      // 5. Copy Subscription URL
+      const copyBtn = document.getElementById('copySubBtn');
+      const copyBtnText = document.getElementById('copyBtnText');
+      const toast = document.getElementById('toastPill');
+
+      function toastNotify(msg) {
+        document.getElementById('toastText').textContent = msg;
+        toast.classList.add('visible');
+        if (navigator.vibrate) navigator.vibrate(25);
+        setTimeout(() => toast.classList.remove('visible'), 2200);
+      }
+
+      copyBtn.addEventListener('click', async () => {
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(subUrl);
+          } else {
+            const ta = document.createElement('textarea');
+            ta.value = subUrl;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+          }
+          copyBtn.classList.add('copied');
+          copyBtnText.textContent = 'آدرس کپی شد ✓';
+          toastNotify('لینک اشتراک با موفقیت کپی شد');
+          setTimeout(() => {
+            copyBtn.classList.remove('copied');
+            copyBtnText.textContent = 'کپی لینک اشتراک';
+          }, 2000);
+        } catch(e) {
+          toastNotify('خطا در کپی لینک');
+        }
+      });
+
+      // 6. Modal Open & QR Load
+      const openModalBtn = document.getElementById('openModalBtn');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const modalBackdrop = document.getElementById('modalBackdrop');
+      const qrImageModal = document.getElementById('qrImageModal');
+      let qrLoaded = false;
+
+      function openModal() {
+        modalBackdrop.classList.add('open');
+        if (!qrLoaded) {
+          qrImageModal.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&margin=0&data=${encodeURIComponent(subUrl)}`;
+          qrLoaded = true;
+        }
+      }
+
+      function closeModal() {
+        modalBackdrop.classList.remove('open');
+      }
+
+      openModalBtn.addEventListener('click', openModal);
+      closeModalBtn.addEventListener('click', closeModal);
+      modalBackdrop.addEventListener('click', (e) => {
+        if (e.target === modalBackdrop) closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+      });
+
+    })();
+  </script>
+</body>
+</html>

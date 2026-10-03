@@ -1,0 +1,22 @@
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Editor & IDE Directories
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Backups & Logs
+*.bak
+*.bak_*
+*.log
+*.tar.gz
+
+# Local testing artifacts
+node_modules/
+dist/
+build/
+*.tmp
